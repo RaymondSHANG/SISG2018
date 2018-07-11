@@ -1,0 +1,14 @@
+#3. Use linear regression to investigate the association between triglycerides and BMI. What do the linear regression model results tell us about the association? Make sure you can interpret the model coefCcients and any hypothesis testing.
+# Fit linear regression model, looking at relationship between BMI and triglycerides
+fit = lm(TG ~ BMI)
+summary(fit)
+
+confint(fit)
+
+
+#4. Compute the predicted value and its 95% confidence interval for the mean value of triglycerides at BMI = 23 as well as for a new individual with BMI = 23. How do these two intervals differ and why?
+# Prediction of the mean, have to call the variable exactly the same as we did in our original dataset -- case sensitive
+predict(fit, newdata=data.frame(BMI=23), interval="confidence")
+
+# Prediction of a new individual value
+predict(fit, newdata=data.frame(BMI=23), interval="prediction")
