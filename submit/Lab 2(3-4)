@@ -48,7 +48,7 @@ summary(fit.ese)
 qnorm(fit.ese$residuals, main="QQ Plot RSE")
 qqline(fit$residuals, col="red")
 
-
+table(APOE)
 chol.frame <- chol.frame %>% mutate(apoe4=ifelse(APOE==3 | APOE==5 | APOE==6,1,0))
 attach(chol.frame)
 fit.apo <- lm(TG ~ BMI + apoe4) 
