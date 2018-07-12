@@ -1,0 +1,71 @@
+# Lab Exercise 1
+
+library(gee)
+library(multcomp)
+library(lmtest)
+library(magrittr)
+library(tidyverse)
+
+chol.frame <- read.csv("https://raw.githubusercontent.com/rhubb/SISG2018/master/data/SISG-Data-cholesterol.csv", header=TRUE)
+
+str(chol.frame)
+head(chol.frame)
+
+attach(chol.frame)
+
+summary(BMI)
+sd(BMI)
+summary(TG)
+sd(TG)
+
+hist(BMI)
+hist(TG)
+
+bmi.group <- 1*(BMI>25)
+bmi.group <- factor(bmi.group, levels=c(0,1), labels=c("Less than 25","Greater than 25"))
+table(bmi.group)
+
+boxplot(TG ~ bmi.group, ylab="Triglycerides (mg/dL)")
+plot(TG ~ BMI)
+
+t.test(TG ~ bmi.group)
+
+fit <- lm(TG ~ BMI)
+summary(fit)
+confint(fit)
+
+predict(fit, newdata=data.frame(BMI=c(23)), interval="confidence")
+predict(fit, newdata=data.frame(BMI=c(23)), interval="prediction")
+
+plot(fit$fitted.values,fit$residuals)
+abline(0,0,col="red")
+qqnorm(fit$residuals, main="QQ Plot")
+qqline(fit$residuals, col="red")
+
+fit.ese <- gee(TG ~ BMI, id=seq(1,length(BMI)))
+summary(fit.ese)
+
+qnorm(fit.ese$residuals, main="QQ Plot RSE")
+qqline(fit$residuals, col="red")
+
+
+chol.frame <- chol.frame %>% mutate(apoe4=ifelse(APOE==3 | APOE==5 | APOE==6,1,0))
+attach(chol.frame)
+fit.apo <- lm(TG ~ BMI + apoe4) 
+summary(fit.apo)
+
+apoe4.frame <- chol.frame[apoe4==1,]
+rest.frame <- chol.frame[apoe4==0,]
+
+plot(apoe4.frame$BMI, apoe4.frame$TG)
+plot(rest.frame$BMI, rest.frame$TG)
+
+fit.apo2 <- lm(TG ~ BMI*apoe4)
+summary(fit.apo2)
+anova(fit.apo, fit.apo2)
+
+
+
+
+
+                    
