@@ -57,12 +57,14 @@ summary(fit.apo)
 apoe4.frame <- chol.frame[apoe4==1,]
 rest.frame <- chol.frame[apoe4==0,]
 
+par(mfrow=c(1,2))
 plot(apoe4.frame$BMI, apoe4.frame$TG)
 plot(rest.frame$BMI, rest.frame$TG)
 
 fit.apo2 <- lm(TG ~ BMI*apoe4)
 summary(fit.apo2)
 anova(fit.apo, fit.apo2)
+
 
 
 
