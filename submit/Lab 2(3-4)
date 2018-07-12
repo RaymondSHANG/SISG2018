@@ -59,7 +59,9 @@ rest.frame <- chol.frame[apoe4==0,]
 
 par(mfrow=c(1,2))
 plot(apoe4.frame$BMI, apoe4.frame$TG)
+abline(lm(TG ~ BMI))
 plot(rest.frame$BMI, rest.frame$TG)
+abline(lm(TG ~ BMI))
 
 fit.apo2 <- lm(TG ~ BMI*apoe4)
 summary(fit.apo2)
