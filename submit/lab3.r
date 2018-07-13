@@ -47,7 +47,8 @@ ggplot(cholesterol, aes(x = as.factor(APOE),
 ggplot(cholesterol, aes(x = as.factor(APOE),
                         y = chol, 
                         fill = as.factor(rs4775401))) + 
-   geom_boxplot() 
+xlab("APOE genotype")+
+geom_boxplot() 
 
 
 # ANCOVA including age and SNP
