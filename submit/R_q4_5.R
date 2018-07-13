@@ -1,9 +1,12 @@
+# Logistic regression for association between rs174548 and HTN, adjusted for TG
+glm.mod3  <- glm(HTN ~ TG+factor(rs174548), family = "binomial")
+
+# Exponentiate coefficients to obtain odds ratios
+exp(glm.mod3$coef)
+
 ## Use a GLM to estimate the relative risk of hypertension for patients with different rs174548 genotypes, 
 ## adjusting for triglyceries. Make sure you can interpret the coefficients. 
 #How do these results compare to the results of the logistic regression analysis?
-
-# Load lmtest library for likelihood ratio tests
-library(lmtest)
 
 ### Relative risk regression
 glm.rr <- gee(HTN ~ TG+factor(rs174548), family = "poisson", id = seq(1,nrow(cholesterol)), data = cholesterol)
