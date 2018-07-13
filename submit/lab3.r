@@ -19,21 +19,25 @@ table(cholesterol$rs4775401, cholesterol$APOE)
 
 
 means <- aggregate(chol ~  as.factor(rs4775401), cholesterol, mean)
+colnames(means)[1]<- "rs4775401"
+means[,2] <- format(means[,2], digits=5)
 ggplot(cholesterol, aes(x = as.factor(rs4775401),
                         y = chol, 
                         fill = as.factor(rs4775401))) + 
 	geom_boxplot() + 
 	stat_summary(fun.y=mean, colour="darkred", geom="point", 
-	shape=18, size=3) 
-	# +
-	# geom_text(data = means, aes(label = chol, y = chol + 0.08))
+	shape=18, size=3) +
+	geom_text(data = means, aes(label = chol, y = as.numeric(chol) + 2))
 
 means <- aggregate(chol ~  as.factor(APOE), cholesterol, mean)
+colnames(means)[1]<- "APOE"
+means[,2] <- format(means[,2], digits=5)
 ggplot(cholesterol, aes(x = as.factor(APOE),
                         y = chol, 
                         fill = as.factor(APOE))) + geom_boxplot() + 
    stat_summary(fun.y=mean, colour="darkred", geom="point", 
-               shape=18, size=3)
+               shape=18, size=3)+
+	geom_text(data = means, aes(label = chol, y = as.numeric(chol) + 2))
 
 
 
